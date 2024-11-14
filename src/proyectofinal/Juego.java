@@ -61,5 +61,4 @@ public class Juego {
         System.out.println("Precio: " + precio);
         System.out.println("Valoración: " + valoracion + " estrellas");
     }
-
 }

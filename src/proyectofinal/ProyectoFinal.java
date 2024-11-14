@@ -1,7 +1,6 @@
 package proyectofinal;
 
 import java.util.*;
-//hola
 
 public class ProyectoFinal {
 
@@ -22,11 +21,32 @@ public class ProyectoFinal {
         input.nextLine();
 
         Usuario usuario = new Usuario(nombre, email, contrasena, saldo);
-
         Biblioteca biblioteca = new Biblioteca();
+
         Juego juego1 = new Juego("Resident Evil", "Terror", 30, 0);
-        Juego juego2 = new Juego("FIFA 23", "Deportes", 60, 0);
-        Juego juego3 = new Juego("The Witcher 3", "Aventura", 40, 0);
+        Juego juego2 = new Juego("Outlast", "Terror", 20, 0);
+        Juego juego3 = new Juego("Silent Hill 2", "Terror", 25, 0);
+        Juego juego4 = new Juego("FIFA 23", "Deportes", 60, 0);
+        Juego juego5 = new Juego("Football Manager 2025", "Deportes", 50, 0);
+        Juego juego6 = new Juego("Fifa 17", "Deportes", 40, 0);
+        Juego juego7 = new Juego("The Witcher 3", "Aventura", 40, 0);
+        Juego juego8 = new Juego("GOW Ragnarok", "Aventura", 70, 0);
+        Juego juego9 = new Juego("Assassin's Creed Valhalla", "Aventura", 60, 0);
+
+        ArrayList<Juego> juegosTerror = new ArrayList<>();
+        juegosTerror.add(juego1);
+        juegosTerror.add(juego2);
+        juegosTerror.add(juego3);
+
+        ArrayList<Juego> juegosDeportes = new ArrayList<>();
+        juegosDeportes.add(juego4);
+        juegosDeportes.add(juego5);
+        juegosDeportes.add(juego6);
+
+        ArrayList<Juego> juegosAventura = new ArrayList<>();
+        juegosAventura.add(juego7);
+        juegosAventura.add(juego8);
+        juegosAventura.add(juego9);
 
         System.out.println("Bienvenido " + usuario.getNombre());
         System.out.println("Saldo actual: " + usuario.getSaldo());
@@ -56,33 +76,15 @@ public class ProyectoFinal {
         }
         System.out.println("Género elegido: " + generoElegido);
         input.nextLine();
+
         if (generoElegido.equalsIgnoreCase("Terror")) {
-            System.out.println("Estos son los juegos a disposición");
-            System.out.println("--------------------");
-            System.out.println("Resident Evil Village");
-            System.out.println("Outlast");
-            System.out.println("Silent Hill 2");
-            System.out.println("Alien: Isolation");
-            System.out.println("Amnesia: The Dark Descent");
+            Biblioteca.mostrarJuegos(juegosTerror);
         } else {
             if (generoElegido.equalsIgnoreCase("Deportes")) {
-                System.out.println("Estos son los juegos a disposición");
-                System.out.println("--------------------");
-                System.out.println("Football Manager 2025");
-                System.out.println("Fifa 17");
-                System.out.println("EA Sports FC 25");
-                System.out.println("eFootball 2005");
-                System.out.println("NBA 2K");
+                Biblioteca.mostrarJuegos(juegosDeportes);
             } else {
                 if (generoElegido.equalsIgnoreCase("Aventura")) {
-                    System.out.println("Estos son los juegos a disposicion");
-                    System.out.println("--------------------");
-                    System.out.println("GOW Ragnarok");
-                    System.out.println("Zelda BOTW");
-                    System.out.println("Assassin's Creed Valhalla");
-                    System.out.println("Batman Arkham Knight");
-                    System.out.println("Red dead Redemption 2");
-                } else {
+                    Biblioteca.mostrarJuegos(juegosAventura);
                 }
             }
         }

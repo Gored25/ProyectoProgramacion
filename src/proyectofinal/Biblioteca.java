@@ -23,6 +23,13 @@ public class Biblioteca {
         System.out.println("Juego agregado a la biblioteca.");
     }
 
+    public static void mostrarJuegos(ArrayList<Juego> juegos) {
+        for (int i = 0; i < juegos.size(); i++) {
+            Juego juego = juegos.get(i);
+            System.out.println((i + 1) + ". " + juego.getTitulo() + " - Precio: $" + juego.getPrecio());
+        }
+    }
+
     public void eliminarJuego(String nombreJuego) {
         boolean juegoEncontrado = false;
         for (int i = 0; i < juegos.size(); i++) {

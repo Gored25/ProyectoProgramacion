@@ -21,6 +21,24 @@ public class ProyectoFinal {
         input.nextLine();
 
         Usuario usuario = new Usuario(nombre, email, contrasena, saldo);
+
+        System.out.println("¿Desea actualizar sus datos? (si/no). Este mensaje no volverá a aparecer.");
+        String respuesta = input.nextLine();
+
+        if (respuesta.equalsIgnoreCase("si")) {
+            System.out.println("Ingrese su nuevo nombre:");
+            String nuevoNombre = input.nextLine();
+
+            System.out.println("Ingrese su nuevo correo:");
+            String nuevoCorreo = input.nextLine();
+
+            System.out.println("Ingrese su nueva contraseña:");
+            String nuevaContrasena = input.nextLine();
+
+            usuario.actualizarDatos(nuevoNombre, nuevoCorreo, nuevaContrasena);
+            System.out.println("Datos actualizados con éxito.");
+        }
+
         Biblioteca biblioteca = new Biblioteca();
 
         Juego juego1 = new Juego("Resident Evil", "Terror", 30, 0);
@@ -57,7 +75,7 @@ public class ProyectoFinal {
         System.out.println("3. Aventura");
 
         int opcionGenero = input.nextInt();
-        String generoElegido;
+        String generoElegido = null;
 
         switch (opcionGenero) {
             case 1:
@@ -70,7 +88,6 @@ public class ProyectoFinal {
                 generoElegido = "Aventura";
                 break;
             default:
-                generoElegido = "Género no válido";
                 System.out.println("Género no válido.");
                 break;
         }
@@ -86,6 +103,52 @@ public class ProyectoFinal {
                 if (generoElegido.equalsIgnoreCase("Aventura")) {
                     Biblioteca.mostrarJuegos(juegosAventura);
                 }
+            }
+        }
+
+        System.out.println("Elija un juego por número para comprar:");
+        int juegoElegido = input.nextInt();
+
+        Juego juegoSeleccionado = null;
+
+        switch (generoElegido) {
+            case "Terror":
+                juegoSeleccionado = juegosTerror.get(juegoElegido - 1);
+                break;
+            case "Deportes":
+                juegoSeleccionado = juegosDeportes.get(juegoElegido - 1);
+                break;
+            case "Aventura":
+                juegoSeleccionado = juegosAventura.get(juegoElegido - 1);
+                break;
+        }
+
+        if (usuario.getSaldo() >= juegoSeleccionado.getPrecio()) {
+            usuario.realizarCompra(juegoSeleccionado.getPrecio());
+            System.out.println("El precio del juego es: $" + juegoSeleccionado.getPrecio());
+
+            System.out.println("¿Te gustaría valorar el juego (1-5)?");
+            int valoracion = input.nextInt();
+            if (valoracion >= 1 && valoracion <= 5) {
+                juegoSeleccionado.agregarValoracion(valoracion);
+                System.out.println("Gracias por valorar el juego con " + valoracion + " estrellas.");
+            } else {
+                System.out.println("Valoración no válida. Debe ser entre 1 y 5.");
+            }
+            System.out.println("¿Desea eliminar la compra? (si/no)");
+            String eliminarCompra = input.next();
+            if (eliminarCompra.equalsIgnoreCase("si")) {
+                usuario.eliminarCompra(juegoSeleccionado.getTitulo());
+            }
+        } else {
+            System.out.println("Saldo insuficiente.");
+
+            System.out.println("¿Desea agregar más saldo? (si/no): ");
+            String respuestaAgregarSaldo = input.next();
+
+            if (respuestaAgregarSaldo.equalsIgnoreCase("si")) {
+                System.out.println("¿Cuánto desea agregar a su saldo? $");
+                double montoAdicional = input.nextDouble();
             }
         }
     }

@@ -48,6 +48,12 @@ public class Usuario {
         this.saldo = saldo;
     }
 
+    public void actualizarDatos(String nuevoNombre, String nuevoCorreo, String nuevaContrasena) {
+        nombre = nuevoNombre;
+        email = nuevoCorreo;
+        contrasena = nuevaContrasena;
+    }
+
     public void agregarSaldo(double monto) {
         this.saldo += monto;
     }
@@ -62,6 +68,19 @@ public class Usuario {
             System.out.println("Compra realizada con éxito.");
         } else {
             System.out.println("Saldo insuficiente para realizar la compra.");
+        }
+    }
+
+    public void eliminarCompra(String tituloJuego) {
+        System.out.println("Se eliminará la compra del juego: " + tituloJuego + " (sin reembolso).");
+    }
+
+    public void recargarSaldo(double cantidad) {
+        if (cantidad > 0) {
+            this.saldo += cantidad;
+            System.out.println("Saldo recargado exitosamente. Nuevo saldo: $" + this.saldo);
+        } else {
+            System.out.println("La cantidad a recargar debe ser mayor que 0.");
         }
     }
 }

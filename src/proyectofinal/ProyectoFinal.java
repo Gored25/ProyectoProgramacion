@@ -69,93 +69,100 @@ public class ProyectoFinal {
         System.out.println("Bienvenido " + usuario.getNombre());
         System.out.println("Saldo actual: " + usuario.getSaldo());
 
-        System.out.println("Elige un género: ");
-        System.out.println("1. Terror");
-        System.out.println("2. Deportes");
-        System.out.println("3. Aventura");
-
-        int opcionGenero = input.nextInt();
-        String generoElegido = null;
-
-        switch (opcionGenero) {
-            case 1:
-                generoElegido = "Terror";
-                break;
-            case 2:
-                generoElegido = "Deportes";
-                break;
-            case 3:
-                generoElegido = "Aventura";
-                break;
-            default:
-                System.out.println("Género no válido.");
-                break;
-        }
-        System.out.println("Género elegido: " + generoElegido);
-        input.nextLine();
-
         boolean continuar = true;
 
         while (continuar) {
-            if (generoElegido.equalsIgnoreCase("Terror")) {
-                Biblioteca.mostrarJuegos(juegosTerror);
-            } else {
-                if (generoElegido.equalsIgnoreCase("Deportes")) {
+            System.out.println("Elige un género: ");
+            System.out.println("1. Terror");
+            System.out.println("2. Deportes");
+            System.out.println("3. Aventura");
+            System.out.println("4. Ver biblioteca");
+            System.out.println("5. Salir");
+
+            int opcionGenero = input.nextInt();
+            input.nextLine();
+
+            String generoElegido = null;
+
+            switch (opcionGenero) {
+                case 1:
+                    generoElegido = "Terror";
+                    break;
+                case 2:
+                    generoElegido = "Deportes";
+                    break;
+                case 3:
+                    generoElegido = "Aventura";
+                    break;
+                case 4:
+                    biblioteca.mostrarBiblioteca();
+                    break;
+                case 5:
+                    System.out.println("Gracias por usar el sistema. ¡Hasta luego!");
+                    continuar = false;
+                    break;
+                default:
+                    System.out.println("Género no válido.");
+                    break;
+            }
+
+            if (continuar && opcionGenero != 4) {
+                System.out.println("Género elegido: " + generoElegido);
+                if (generoElegido.equalsIgnoreCase("Terror")) {
+                    Biblioteca.mostrarJuegos(juegosTerror);
+                } else if (generoElegido.equalsIgnoreCase("Deportes")) {
                     Biblioteca.mostrarJuegos(juegosDeportes);
-                } else {
-                    if (generoElegido.equalsIgnoreCase("Aventura")) {
-                        Biblioteca.mostrarJuegos(juegosAventura);
+                } else if (generoElegido.equalsIgnoreCase("Aventura")) {
+                    Biblioteca.mostrarJuegos(juegosAventura);
+                }
+
+                System.out.println("Elija un juego por número para comprar:");
+                int juegoElegido = input.nextInt();
+                Juego juegoSeleccionado = null;
+
+                switch (generoElegido) {
+                    case "Terror":
+                        juegoSeleccionado = juegosTerror.get(juegoElegido - 1);
+                        break;
+                    case "Deportes":
+                        juegoSeleccionado = juegosDeportes.get(juegoElegido - 1);
+                        break;
+                    case "Aventura":
+                        juegoSeleccionado = juegosAventura.get(juegoElegido - 1);
+                        break;
+                }
+
+                if (usuario.getSaldo() >= juegoSeleccionado.getPrecio()) {
+                    usuario.realizarCompra(juegoSeleccionado.getPrecio());
+                    biblioteca.agregarJuego(juegoSeleccionado);
+                    System.out.println("El precio del juego es: $" + juegoSeleccionado.getPrecio());
+
+                    System.out.println("¿Te gustaría valorar el juego (1-5)?");
+                    int valoracion = input.nextInt();
+                    if (valoracion >= 1 && valoracion <= 5) {
+                        juegoSeleccionado.agregarValoracion(valoracion);
+                        System.out.println("Gracias por valorar el juego con " + valoracion + " estrellas.");
+                    } else {
+                        System.out.println("Valoración no válida. Debe ser entre 1 y 5.");
                     }
-                }
-            }
 
-            System.out.println("Elija un juego por número para comprar:");
-            int juegoElegido = input.nextInt();
-
-            Juego juegoSeleccionado = null;
-
-            switch (generoElegido) {
-                case "Terror":
-                    juegoSeleccionado = juegosTerror.get(juegoElegido - 1);
-                    break;
-                case "Deportes":
-                    juegoSeleccionado = juegosDeportes.get(juegoElegido - 1);
-                    break;
-                case "Aventura":
-                    juegoSeleccionado = juegosAventura.get(juegoElegido - 1);
-                    break;
-            }
-
-            if (usuario.getSaldo() >= juegoSeleccionado.getPrecio()) {
-                usuario.realizarCompra(juegoSeleccionado.getPrecio());
-                System.out.println("El precio del juego es: $" + juegoSeleccionado.getPrecio());
-
-                System.out.println("¿Te gustaría valorar el juego (1-5)?");
-                int valoracion = input.nextInt();
-                if (valoracion >= 1 && valoracion <= 5) {
-                    juegoSeleccionado.agregarValoracion(valoracion);
-                    System.out.println("Gracias por valorar el juego con " + valoracion + " estrellas.");
+                    System.out.println("¿Desea eliminar la compra? (si/no)");
+                    String eliminarCompra = input.next();
+                    if (eliminarCompra.equalsIgnoreCase("si")) {
+                        usuario.eliminarCompra(juegoSeleccionado.getTitulo());
+                        biblioteca.eliminarJuego(juegoSeleccionado.getTitulo());
+                    }
                 } else {
-                    System.out.println("Valoración no válida. Debe ser entre 1 y 5.");
-                }
-                System.out.println("¿Desea eliminar la compra? (si/no)");
-                String eliminarCompra = input.next();
-                if (eliminarCompra.equalsIgnoreCase("si")) {
-                    usuario.eliminarCompra(juegoSeleccionado.getTitulo());
-                }
-            } else {
-                System.out.println("Saldo insuficiente.");
+                    System.out.println("Saldo insuficiente.");
 
-                System.out.println("¿Desea agregar más saldo? (si/no): ");
-                String respuestaAgregarSaldo = input.next();
+                    System.out.println("¿Desea agregar más saldo? (si/no): ");
+                    String respuestaAgregarSaldo = input.next();
 
-                if (respuestaAgregarSaldo.equalsIgnoreCase("si")) {
-                    System.out.println("¿Cuánto desea agregar a su saldo? $");
-                    double montoAdicional = input.nextDouble();
-                    usuario.recargarSaldo(montoAdicional);
-                    continuar = true;
-                } else {
-                    if (respuestaAgregarSaldo.equalsIgnoreCase("no")) {
+                    if (respuestaAgregarSaldo.equalsIgnoreCase("si")) {
+                        System.out.println("¿Cuánto desea agregar a su saldo? $");
+                        double montoAdicional = input.nextDouble();
+                        usuario.recargarSaldo(montoAdicional);
+                    } else {
                         continuar = false;
                     }
                 }

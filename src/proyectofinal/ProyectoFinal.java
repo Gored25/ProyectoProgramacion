@@ -152,17 +152,12 @@ public class ProyectoFinal {
                 if (respuestaAgregarSaldo.equalsIgnoreCase("si")) {
                     System.out.println("¿Cuánto desea agregar a su saldo? $");
                     double montoAdicional = input.nextDouble();
-                    saldo += montoAdicional;
-
-                    if (saldo >= juegoSeleccionado.getPrecio()) {
-                        saldo -= juegoSeleccionado.getPrecio();
-                        System.out.println("Compra realizada con exito");
-                    } else {
-                        System.out.println("Aun no tienes suficiente saldo para realizar la compra");
-                    }
+                    usuario.recargarSaldo(montoAdicional);
+                    continuar = true;
                 } else {
-                    System.out.println("No se realizara ninguna accion");
-
+                    if (respuestaAgregarSaldo.equalsIgnoreCase("no")) {
+                        continuar = false;
+                    }
                 }
             }
         }

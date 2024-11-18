@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Biblioteca {
 
-    ArrayList<Juego> juegos;
+     ArrayList<Juego> juegos;
 
     public Biblioteca() {
         this.juegos = new ArrayList<>();
@@ -36,7 +36,7 @@ public class Biblioteca {
             if (juegos.get(i).getTitulo().equalsIgnoreCase(nombreJuego)) {
                 juegos.remove(i);
                 juegoEncontrado = true;
-                break;
+                i--;
             }
         }
 
@@ -54,7 +54,7 @@ public class Biblioteca {
             System.out.println((i + 1) + ". " + juego.getTitulo() + " - " + juego.getGenero());
         }
     }
-
+    
     public void sugerirJuegos(String genero) {
         System.out.println("Sugerencias de juegos para el género: " + genero);
         for (Juego juego : juegos) {
